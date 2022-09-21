@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <link rel="stylesheet" href="../css/app.css">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="header">
+            <ul>
+                <li>
+                    <a href="/home">News</a>
+                </li>
+                <li>
+                    <a href="/event">Events</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="main">
+        <form action="" method="post" onsubmit="postEvent()" class="post-form">
+            <div class="form-control">
+                <label for="">Description</label>
+                <textarea name="description" id="description" 
+                placeholder="Enter description"></textarea>
+            </div>
+
+            <div class="form-control">
+                <label for="">Pick image</label>
+                <input type="file" id="file" name="img"  >
+            </div>
+
+            <button  class="btn-primary">Post Event</button>
+        </form>
+
+        <div class="latest-news">
+            <div><h3>Latest Events</h3></div>
+            <% data.forEach(function(d){ %>
+
+                <div class="section-data">
+                    <img src="<%=d.image%>" width="100%" height="250px" />
+                    <p class="date"><%=  moment(d.createdAt).format('Do MMMM, YYYY') %></p>
+                    <p><%= d.description %></p>
+                    <div class="section-footer">
+                        <button class="btn-delete" onclick="deleteEvent('<%=d._id%>')">Delete</button>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+    </div>
+
+    <script>
+        async function postEvent(){
+            event.preventDefault();
+            let btn = document.querySelector(".btn-primary");
+            let description = document.querySelector("#description").value
+            var file = document.querySelector('input[type=file]').files[0];
+            console.log("files here",file)
+            const data = JSON.stringify({"description":description,'img':file})
+            console.log(data)
+            const data1 = new FormData();
+            
+            data1.append("description",description);
+            data1.append("img",file)
+            btn.innerHTML = "posting, wait..."
+            const res = await fetch("http://localhost:3100/events",
+            {method:"POST",body:data1})
+            const result = await res.json();
+            console.log(result)
+
+            if(result.status){
+                document.querySelector("#description").value = ""
+                window.location.reload()
+            }else{
+            btn.innerHTML = "post event"
+            }
+
+        }
+
+        async function deleteEvent(id){
+
+            const url = `http://localhost:3100/events/${id}`
+            const res = await fetch(url,{method:"DELETE"})
+            const data = await res.json()
+            console.log(data);
+            if(data.status){
+                window.location.reload()
+            }
+        }
+    </script>
+</body>
+</html>

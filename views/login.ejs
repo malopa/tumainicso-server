@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tumainisco server</title>
+    <link rel="stylesheet" href="../css/app.css">
+
+</head>
+<body>
+    <div class="container">
+
+        <header class="header">
+            <h1>Tumanicso </h1>
+        </header>
+    
+        <main class="main">
+            <form action="" onsubmit="login()" method="post" class="login">
+
+                <div class="form-control">
+                    <h3>Log in</h3>
+                </div>
+                <div class="form-control">
+                    <label for="">Username</label>
+                    <input type="text" name="username" id="username" placeholder="Enter username" required>
+                </div>
+
+                <div class="form-control">
+                    <label for="">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                </div>
+
+
+                <button class="btn-primary">Add user</button>
+
+            </form>
+        </main>
+    
+        <footer class="footer">
+            <p>
+                tumainicso@2022
+            </p>
+            <p><a href="https://tumainicso.org">open website</a></p>
+        </footer>
+
+    </div>
+    
+    <script>
+
+        async function login(){
+            event.preventDefault();
+            let username = document.querySelector("#username").value
+            let password = document.querySelector("#password").value
+
+            let data = JSON.stringify({username,password})
+            
+            const form = new FormData()
+            form.append("username",username);
+            form.append("password",password);
+            
+            const res = await fetch("http://localhost:3100/user/login",
+            {headers:{'Content-Type':'application/json'},method:"POST",body:data})
+            const result = await res.json();
+            console.log(result)
+
+            if(result.status){
+                localStorage.setItem("token",result.token)
+                window.location = 'http://localhost:3100/home'
+                console.log("token is",localStorage.getItem("token"))
+            }else{
+                console.log("No token")
+
+            }
+
+        }
+
+    </script>
+</body>
+</html>

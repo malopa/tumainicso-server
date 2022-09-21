@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumaincso</title>
+    <link rel="stylesheet" href="../css/app.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div style="margin-right:1rem;">
+                <h4><%=title %></h4>
+            </div>
+            <ul>
+                <li>
+                    <a href="/home">News</a>
+                </li>
+                <li>
+                    <a href="/event">Events</a>
+                </li>
+            </ul>
+        </div>
+        
+
+    </div>
+
+
+    <div class="main">
+        <form action="" onsubmit="postNews()" class="post-form">
+            <div class="form-control">
+                <textarea name="content" id="news" placeholder="Place your news here"></textarea>
+            </div>
+
+            <button class="btn-primary">Post news</button>
+        </form>
+
+        <div class="latest-news">
+            <!-- <%=data%> -->
+            <div><h3>Latest News</h3></div>
+            <% data.forEach(function(d){ %>
+                <div class="section-data">
+                    <p class="date"><%=  moment(d.createdAt).format('Do MMMM, YYYY') %></p>
+                    <p><%= d.content %></p>
+                    <div class="section-footer">
+                        <button class="btn-delete" onclick="deleteNews('<%=d._id%>')">Delete</button>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+    <script>
+        async function postNews(){
+            event.preventDefault();
+            let btn = document.querySelector(".btn-primary");
+
+            let news = document.querySelector("#news").value
+
+            let token = localStorage.getItem("token")
+            if(token){
+                btn.innerHTML = "Posting, wait ..."
+                let data = JSON.stringify({'content':news,token})
+                
+                const res = await fetch("http://localhost:3100/news",
+                {headers:{'Content-Type':'application/json'},method:"POST",body:data})
+                const result = await res.json();
+                console.log(result)
+
+                if(result.status){
+                    document.querySelector("#news").value = ""
+                    window.location.reload()
+                }else{
+                    btn.innerHTML = "Post news"
+                }
+
+            }
+        }
+
+        async function deleteNews(id){
+
+            const url = `http://localhost:3100/news/${id}`
+            const res = await fetch(url,{method:"DELETE"})
+            const data = await res.json()
+            console.log(data);
+            if(data.status){
+                window.location.reload()
+            }
+        }
+
+    </script>
+</body>
+</html>

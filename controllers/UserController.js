@@ -9,17 +9,23 @@ module.exports = {
         return res.status(201).json(result)
     },
     login:async (req,res)=>{
-        let {username,password} = req.body;
-        console.log("credential",req.body)
-        let data = await User.find({username:username,password:password})
 
-        let token = jwt.sign({exp: Math.floor(Date.now() / 1000) + (60 * 60),
-            data: data
-         }, process.env.SECRET);
+        try{
+            let {username,password} = req.body;
+            let data = await User.find({username:username,password:password})
+    
+            let token = jwt.sign({exp: Math.floor(Date.now() / 1000) + (60 * 60),
+                data: data
+             }, process.env.SECRET);
+    
+            if(data.length > 0)return res.status(200).json({status:true,token:token});
+            
+            return res.status(200).json({status:false,msg:"wrong username/password"});
+        }catch(err){
+            return res.status(200).json({status:false,msg:`failed ${err}`});
+        }
 
-        if(data.length > 0)return res.status(200).json({status:true,token:token});
         
-        return res.status(200).json({status:false,msg:"wrong username/password"});
     },
     deleteUser:async (req,res)=>{
         res.status(200).json({msg:"hello delete"})

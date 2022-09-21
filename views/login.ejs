@@ -48,8 +48,19 @@
     
     <script>
 
+        document.addEventListener("DOMContentLoaded",function(){
+            console.log("token is",localStorage.getItem("token"))
+            let token = localStorage.getItem("token");
+            if(token){
+                window.location = 'https://tumainicso.herokuapp.com/home'
+            }
+
+        })
+
         async function login(){
             event.preventDefault();
+
+            let bnt = document.querySelector(".btn-primary");
             let username = document.querySelector("#username").value
             let password = document.querySelector("#password").value
 
@@ -59,17 +70,19 @@
             form.append("username",username);
             form.append("password",password);
             
-            const res = await fetch("http://localhost:3100/user/login",
+            btn.innerHTML = 'Please, wait ... '
+            const res = await fetch("https://tumainicso.herokuapp.com/user/login",
             {headers:{'Content-Type':'application/json'},method:"POST",body:data})
             const result = await res.json();
             console.log(result)
 
             if(result.status){
                 localStorage.setItem("token",result.token)
-                window.location = 'http://localhost:3100/home'
+                window.location = 'https://tumainicso.herokuapp.com/home'
                 console.log("token is",localStorage.getItem("token"))
             }else{
                 console.log("No token")
+                btn.innerHTML = 'Log In'
 
             }
 

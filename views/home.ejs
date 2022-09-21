@@ -63,7 +63,7 @@
                 btn.innerHTML = "Posting, wait ..."
                 let data = JSON.stringify({'content':news,token})
                 
-                const res = await fetch("http://localhost:3100/news",
+                const res = await fetch("https://tumainicso.herokuapp.com/news",
                 {headers:{'Content-Type':'application/json'},method:"POST",body:data})
                 const result = await res.json();
                 console.log(result)
@@ -80,7 +80,7 @@
 
         async function deleteNews(id){
 
-            const url = `http://localhost:3100/news/${id}`
+            const url = `https://tumainicso.herokuapp.com/news/${id}`
             const res = await fetch(url,{method:"DELETE"})
             const data = await res.json()
             console.log(data);

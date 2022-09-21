@@ -51,7 +51,7 @@ app.use(bodyParser.urlencoded({
 
 
 var port = process.env.PORT||3100
-var mongoDbUrl  = process.env.URI; //|| "mongodb://localhost:27017/tumaini";
+var mongoDbUrl  = process.env.URIPROD; //|| "mongodb://localhost:27017/tumaini";
 let options = { useNewUrlParser: true, useUnifiedTopology: true }
 
 app.use(news)
@@ -110,7 +110,7 @@ database.once('connected',()=>{
     console.log("connected")
 })
 
-// app.listen(port,"192.168.43.253",(req,res)=>{
+// app.listen(port,"197.250.99.31",(req,res)=>{
 //     console.log(`app is listening at port http://localhost:${port}`)
 // })
 

@@ -13,9 +13,10 @@
 .section-data{
     line-height: 1.8;
     padding:1rem;
-    box-shadow: 0 0 10px -4px;
+    box-shadow: 0 0 10px -5px;
     margin-bottom: 1rem;
     background-color: #FFF;
+    border-radius: 2px;
 }
 .section-data >p{
     line-height: 2;
@@ -156,6 +157,7 @@ textarea{
 }
 .section-data{
     width: 400px;
+    border-radius: 2px;
 }
 @media screen and (max-width:768px){
     .main{

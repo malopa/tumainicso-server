@@ -43,6 +43,7 @@
             <% data.forEach(function(d){ %>
                 <div class="section-data">
                     <p class="date"><%=  moment(d.createdAt).format('Do MMMM, YYYY') %></p>
+                    <h3><%= d.title %></h3>
                     <p><%= d.content %></p>
                     <div class="section-footer">
                         <button class="btn-delete" onclick="deleteNews('<%=d._id%>')">Delete</button>

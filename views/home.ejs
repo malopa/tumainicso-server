@@ -34,6 +34,11 @@
                 <textarea name="content" id="news" placeholder="Place your news here"></textarea>
             </div>
 
+             <div class="form-control">
+                <label for="">Pick File</label>
+                <input type="file" id="file" name="file"  />
+            </div>
+
             <button class="btn-primary">Post news</button>
         </form>
 
@@ -53,20 +58,26 @@
             <% }) %>
         </div>
     </div>
+                <!-- let data = JSON.stringify({'content':news,token}) -->
+
     <script>
         async function postNews(){
             event.preventDefault();
             let btn = document.querySelector(".btn-primary");
-
             let news = document.querySelector("#news").value
+            let file = document.querySelector("#news").files[0]
 
             let token = localStorage.getItem("token")
             if(token){
                 btn.innerHTML = "Posting, wait ..."
-                let data = JSON.stringify({'content':news,token})
+                const formData = new FormData();
+                formData.append("content",news)
+                formData.append("token",token)
+                formData.append("file",file)
                 
+                return;
                 const res = await fetch("https://tumainicso.herokuapp.com/news",
-                {headers:{'Content-Type':'application/json'},method:"POST",body:data})
+                {headers:{'Content-Type':'application/json'},method:"POST",body:formData})
                 const result = await res.json();
                 console.log(result)
 

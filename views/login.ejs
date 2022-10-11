@@ -46,6 +46,11 @@
 
     </div>
     
+    <!-- window.location = 'https://tumainicso.herokuapp.com/home' -->
+
+                <!-- window.location = 'https://tumainicso.herokuapp.com/home' -->
+                <!-- window.location = 'http://localhost:31000/home' -->
+
     <script>
 
         document.addEventListener("DOMContentLoaded",function(){
@@ -79,6 +84,7 @@
             if(result.status){
                 localStorage.setItem("token",result.token)
                 window.location = 'https://tumainicso.herokuapp.com/home'
+
                 console.log("token is",localStorage.getItem("token"))
             }else{
                 console.log("No token")

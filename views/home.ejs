@@ -29,7 +29,11 @@
 
 
     <div class="main">
-        <form action="" onsubmit="postNews()" class="post-form">
+        <form action="" onsubmit="postNews()" class="post-form" enctype="multipart/form-data">
+            <div class="form-control">
+                <input name="title" id="title" placeholder="Place your title here"/>
+            </div>
+
             <div class="form-control">
                 <textarea name="content" id="news" placeholder="Place your news here"></textarea>
             </div>
@@ -50,7 +54,7 @@
                     <p class="date"><%=  moment(d.createdAt).format('Do MMMM, YYYY') %></p>
                     <h3><%= d.title %></h3>
                     <p><%= d.content %></p>
-                    <p><a href="<%= d.pdf_url %>"><%= d.pdf_url %></a></p>
+                    <p><a target="_blank" href="<%= d.pdf_url %>"><%= d.pdf_url %></a></p>
                     <div class="section-footer">
                         <button class="btn-delete" onclick="deleteNews('<%=d._id%>')">Delete</button>
                     </div>
@@ -64,7 +68,8 @@
         async function postNews(){
             event.preventDefault();
             let btn = document.querySelector(".btn-primary");
-            let news = document.querySelector("#news").value
+            let news = document.querySelector("#news").value || ''
+            let title = document.querySelector("#title").value
             let file = document.querySelector("#file").files[0]
             console.log(file);
             let token = localStorage.getItem("token")
@@ -72,11 +77,12 @@
                 btn.innerHTML = "Posting, wait ..."
                 const formData = new FormData();
                 formData.append("content",news)
+                formData.append("title",title)
                 formData.append("token",token)
                 formData.append("file",file)
                 
                 const res = await fetch("https://tumainicso.herokuapp.com/news",
-                {headers:{'Content-Type':'application/json'},method:"POST",body:formData})
+                {method:"POST",body:formData})
                 const result = await res.json();
                 console.log(result)
 

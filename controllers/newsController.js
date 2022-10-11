@@ -9,6 +9,8 @@ module.exports = {
     postNews:async (req,res)=>{
 
         try{
+            console.log(req.files)
+
             let files = req.files;
             console.log(files)
             const s3 = new AWS.S3({

@@ -69,9 +69,8 @@
             event.preventDefault();
             let btn = document.querySelector(".btn-primary");
             let news = document.querySelector("#news").value || ''
-            let title = document.querySelector("#title").value
+            let title = document.querySelector("#title").value || ""
             let file = document.querySelector("#file").files[0]
-            console.log(file);
             let token = localStorage.getItem("token")
             if(token){
                 btn.innerHTML = "Posting, wait ..."
@@ -80,6 +79,8 @@
                 formData.append("title",title)
                 formData.append("token",token)
                 formData.append("file",file)
+                
+                console.log(file);
                 
                 const res = await fetch("https://tumainicso.herokuapp.com/news",
                 {method:"POST",body:formData})

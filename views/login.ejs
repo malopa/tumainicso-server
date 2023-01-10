@@ -46,7 +46,7 @@
 
     </div>
     
-    <!-- window.location = 'https://tumainicso.herokuapp.com/home' -->
+    <!-- window.location = 'https://tumainicso.app.com/home' -->
 
                 <!-- window.location = 'https://tumainicso.herokuapp.com/home' -->
                 <!-- window.location = 'http://localhost:31000/home' -->
@@ -57,7 +57,7 @@
             console.log("token is",localStorage.getItem("token"))
             let token = localStorage.getItem("token");
             if(token){
-                window.location = 'https://tumainicso.herokuapp.com/home'
+                window.location = 'https://tumainicso.onrender.com//home'
             }
 
         })
@@ -76,14 +76,14 @@
             form.append("password",password);
             
             btn.innerHTML = 'Please, wait ... '
-            const res = await fetch("https://tumainicso.herokuapp.com/user/login",
+            const res = await fetch("https://tumainicso.onrender.com/user/login",
             {headers:{'Content-Type':'application/json'},method:"POST",body:data})
             const result = await res.json();
             console.log(result)
 
             if(result.status){
                 localStorage.setItem("token",result.token)
-                window.location = 'https://tumainicso.herokuapp.com/home'
+                window.location = 'https://tumainicso.onrender.com/home'
 
                 console.log("token is",localStorage.getItem("token"))
             }else{

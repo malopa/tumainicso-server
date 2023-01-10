@@ -99,7 +99,7 @@
 
         async function deleteNews(id){
 
-            const url = `https://tumainicso.herokuapp.com/news/${id}`
+            const url = `https://tumainicso.onrender.com/news/${id}`
             const res = await fetch(url,{method:"DELETE"})
             const data = await res.json()
             console.log(data);

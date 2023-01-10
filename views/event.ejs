@@ -85,7 +85,7 @@
 
         async function deleteEvent(id){
 
-            const url = `https://tumainicso.herokuapp.com/events/${id}`
+            const url = `https://tumainicso.onrender.com/events/${id}`
             const res = await fetch(url,{method:"DELETE"})
             const data = await res.json()
             console.log(data);

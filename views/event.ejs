@@ -69,7 +69,7 @@
             data1.append("description",description);
             data1.append("img",file)
             btn.innerHTML = "posting, wait..."
-            const res = await fetch("https://tumainicso.herokuapp.com/events",
+            const res = await fetch("https://tumainicso.onrender.com/events",
             {method:"POST",body:data1})
             const result = await res.json();
             console.log(result)
